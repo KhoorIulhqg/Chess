@@ -1,0 +1,29 @@
+# Binary and object directories
+bin/
+obj/
+
+# Object files
+*.o
+
+# Libraries
+*.lib
+*.a
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug files
+*.dSYM/
+
+# IDE specific files
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/c_cpp_properties.json
+
+# OS specific files
+.DS_Store
+.directory
+.Trash-*
