@@ -4,6 +4,10 @@
 #include "test.h"
 
 int main(void) {
+    printf("\n╔════════════════════════════════════════╗\n");
+    printf("║          Chess Engine v0.1.0           ║\n");
+    printf("╚════════════════════════════════════════╝\n\n");
+    
     printf("Running board implementation tests...\n\n");
     
     test_square_conversion();
