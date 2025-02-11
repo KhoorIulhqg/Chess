@@ -26,7 +26,7 @@ void run_board_tests(void) {
         ASSERT(BOARD_TESTS, file == 7 && rank == 7);
     } END_TEST_CASE(BOARD_TESTS);
 
-    TEST_CASE(BOARD_TESTS, "Piece Manipulation") {
+    TEST_CASE(BOARD_TESTS, "Piece manipulation") {
         static const uint8_t white_pawn = MAKE_PIECE(COLOR_WHITE, PIECE_PAWN);
         static const uint8_t black_king = MAKE_PIECE(COLOR_BLACK, PIECE_KING);
     
@@ -40,7 +40,7 @@ void run_board_tests(void) {
         ASSERT(BOARD_TESTS, !IS_PIECE_COLOR(black_king, COLOR_WHITE));
     } END_TEST_CASE(BOARD_TESTS);
 
-    TEST_CASE(BOARD_TESTS, "Board Setup") {
+    TEST_CASE(BOARD_TESTS, "Board setup") {
         Board board;
     
         // Test initial position

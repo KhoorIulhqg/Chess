@@ -18,7 +18,7 @@ extern TestSuite MOVE_TESTS;
 
 // Test macros
 #define TEST_SUITE(suite) \
-    printf("Running %s...\n", suite.name); \
+    printf("\nRunning %s...\n", suite.name); \
     suite.tests_run = 0; \
     suite.tests_failed = 0; \
     unsigned int test_counter = 0
@@ -53,6 +53,5 @@ extern TestSuite MOVE_TESTS;
 
 // Framework functions
 void print_test_results(const TestSuite* suite);
-
 
 #endif // TEST_H

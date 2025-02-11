@@ -5,7 +5,7 @@
 int main(void) {
     printf("\n╔════════════════════════════════════════╗");
     printf("\n║          Chess Engine v0.1.0           ║");
-    printf("\n╚════════════════════════════════════════╝\n\n");
+    printf("\n╚════════════════════════════════════════╝\n");
     
     // Display initial position
     Board board;
