@@ -4,7 +4,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "clear && make clean && make && ./bin/chess",
+            "command": "clear && make clean && make run",
             "group": {
                 "kind": "build",
                 "isDefault": true

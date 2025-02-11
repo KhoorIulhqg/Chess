@@ -1,17 +1,14 @@
-#include <stdio.h>
+#include "test.h"
+#include "test_board.h"
 
-#include "board.h"
+#include <stdio.h>
 
 int main(void) {
     printf("\n╔════════════════════════════════════════╗");
-    printf("\n║          Chess Engine v0.1.0           ║");
+    printf("\n║         Running test suite ...         ║");
     printf("\n╚════════════════════════════════════════╝\n\n");
     
-    // Display initial position
-    Board board;
-    board_init(&board);
-    board_reset(&board);
-    board_display(&board);
+    run_board_tests();
     
     return 0;
 }
