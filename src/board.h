@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <stddef.h> // size_t
 
 // Physical Board definitions
 #define BOARD_WIDTH_8x8     8
@@ -30,8 +29,8 @@
 #define PIECE_COUNT     7
 
 #define COLOR_WHITE     0
-#define COLOR_BLACK     128
-#define COLOR_MASK      128
+#define COLOR_BLACK     0x88
+#define COLOR_MASK      0x88
 #define PIECE_MASK      7
 
 // ASCII constants
@@ -41,10 +40,9 @@
 #define FEN_MIN_LENGTH      24  // Minimum length for a valid FEN string
 
 // Square conversion macros
-#define SQUARE_TO_FILE(sq)  ((sq) & BOARD_RANK_MASK_0x88)
-#define SQUARE_TO_RANK(sq)  ((sq) >> BOARD_SHIFT_0x88)
-#define COORD_TO_SQUARE(f, r) ((r) * (1 << BOARD_SHIFT) + (f))
-
+#define SQUARE_TO_FILE(sq)      ((sq) & BOARD_RANK_MASK_0x88)
+#define SQUARE_TO_RANK(sq)      ((sq) >> BOARD_SHIFT_0x88)
+#define COORD_TO_SQUARE(f, r)   ((r) * (1 << BOARD_SHIFT_0x88) + (f))
 
 // Piece manipulation macros
 #define MAKE_PIECE(color, type)         ((color) | (type))
@@ -59,20 +57,10 @@
 #define CASTLING_BLACK_KINGSIDE  (1 << 2)
 #define CASTLING_BLACK_QUEENSIDE (1 << 3)
 
-// Piece display index calculation
-#define GET_PIECE_DISPLAY_INDEX(piece) \
-    (GET_PIECE_TYPE(piece) + (IS_PIECE_COLOR(piece, COLOR_BLACK) ? PIECE_COUNT : 0))
-
 // Piece display
-#define PIECE_CHARS                 ".PNBRQK.pnbrqk"    // [none][white pieces][none][black pieces]
-#define PIECE_TO_CHAR(piece)        PIECE_CHARS[GET_PIECE_DISPLAY_INDEX(piece)]
-static const char *UNICODE_PIECES[] = {                 // must be strings due to multi-byte encoding :(
-    ".", "♟", "♞", "♝", "♜", "♛", "♚",
-    ".", "♙", "♘", "♗", "♖", "♕", "♔"
-};
-static inline const char *piece_to_unicode(uint8_t piece) {
-    return UNICODE_PIECES[GET_PIECE_DISPLAY_INDEX(piece)];
-}
+#define GET_PIECE_DISPLAY_INDEX(piece)  (GET_PIECE_TYPE(piece) + (IS_PIECE_COLOR(piece, COLOR_BLACK) ? PIECE_COUNT : 0))
+#define PIECE_CHARS                     ".PNBRQK.pnbrqk"    // [none][white pieces][none][black pieces]
+#define PIECE_TO_CHAR(piece)            PIECE_CHARS[GET_PIECE_DISPLAY_INDEX(piece)]
 
 typedef struct {
     uint8_t squares[BOARD_SIZE_0x88];   // 0x88 board representation
@@ -90,27 +78,25 @@ void board_reset(Board *board);
 void board_clear(Board *board);
 
 // Square conversion utilities
-int coord_to_square(int file, int rank);
-void square_to_coord(int square, int *file, int *rank);
-bool is_valid_square(int square);
+void square_to_coord(uint8_t square, uint8_t *file, uint8_t *rank);
+bool is_valid_square(uint8_t square);
 
 // Piece placement and query
-void board_set_piece(Board *board, int square, uint8_t piece);
-uint8_t board_get_piece(const Board *board, int square);
-bool board_is_empty(const Board *board, int square);
-
-// Display functions
-void board_display(const Board *board);
-const char *piece_to_char(uint8_t piece);
+void board_set_piece(Board *board, uint8_t square, uint8_t piece);
+uint8_t board_get_piece(const Board *board, uint8_t square);
+bool board_is_empty(const Board *board, uint8_t square);
 
 // Castling / En Pessant
 void board_set_castling_rights(Board *board, uint8_t rights);
 uint8_t board_get_castling_rights(const Board *board);
-void board_set_en_passant_square(Board *board, int square);
-int board_get_en_passant_square(const Board *board);
+void board_set_en_passant_square(Board *board, uint8_t square);
+int8_t board_get_en_passant_square(const Board *board);
 
 // FEN
 bool board_set_fen(Board *board, const char *fen);
-void board_get_fen(const Board *board, char *fen, size_t len);
+void board_get_fen(const Board *board, char *fen, uint8_t len);
+
+// Display functions
+void board_display(const Board *board);
 
 #endif // BOARD_H

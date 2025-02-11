@@ -4,9 +4,9 @@
 #include "test.h"
 
 int main(void) {
-    printf("\n╔════════════════════════════════════════╗\n");
-    printf("║          Chess Engine v0.1.0           ║\n");
-    printf("╚════════════════════════════════════════╝\n\n");
+    printf("\n╔════════════════════════════════════════╗");
+    printf("\n║          Chess Engine v0.1.0           ║");
+    printf("\n╚════════════════════════════════════════╝\n\n");
     
     printf("Running board implementation tests...\n\n");
     

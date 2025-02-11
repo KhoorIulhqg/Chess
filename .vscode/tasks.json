@@ -4,14 +4,14 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "make clean && make && ./bin/chess",
+            "command": "clear && make clean && make && ./bin/chess",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "presentation": {
                 "reveal": "always",
-                "panel": "new"
+                "panel": "dedicated"
             },
             "problemMatcher": {
                 "owner": "c",
@@ -24,28 +24,6 @@
                     "severity": 4,
                     "message": 5
                 }
-            }
-        },
-        {
-            "label": "clean",
-            "type": "shell",
-            "command": "make clean",
-            "presentation": {
-                "reveal": "always",
-                "panel": "new"
-            }
-        },
-        {
-            "label": "test",
-            "type": "shell",
-            "command": "make test",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal": "always",
-                "panel": "new"
             }
         }
     ]

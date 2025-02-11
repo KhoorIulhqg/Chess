@@ -2,14 +2,16 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include <string.h>
+#include <string.h> // strcmp()
+
+#include "board.h"
 
 void test_square_conversion(void) {
-    int file, rank;
+    uint8_t file, rank;
     
     // Test some key squares
-    assert(coord_to_square(0, 0) == 0);  // a1
-    assert(coord_to_square(7, 7) == 119); // h8
+    static_assert(COORD_TO_SQUARE(0, 0) == 0);  // a1
+    static_assert(COORD_TO_SQUARE(7, 7) == 119); // h8
     
     square_to_coord(0, &file, &rank);
     assert(file == 0 && rank == 0);
@@ -21,9 +23,9 @@ void test_square_conversion(void) {
 }
 
 void test_piece_manipulation(void) {
-    uint8_t white_pawn = MAKE_PIECE(COLOR_WHITE, PIECE_PAWN);
-    uint8_t black_king = MAKE_PIECE(COLOR_BLACK, PIECE_KING);
-    
+    static const uint8_t white_pawn = MAKE_PIECE(COLOR_WHITE, PIECE_PAWN);
+    static const uint8_t black_king = MAKE_PIECE(COLOR_BLACK, PIECE_KING);
+
     assert(GET_PIECE_TYPE(white_pawn) == PIECE_PAWN);
     assert(GET_PIECE_COLOR(white_pawn) == COLOR_WHITE);
     
@@ -44,13 +46,13 @@ void test_board_setup(void) {
     board_reset(&board);
     
     // Check some key squares
-    assert(GET_PIECE_TYPE(board_get_piece(&board, coord_to_square(0, 0))) == PIECE_ROOK);
-    assert(GET_PIECE_TYPE(board_get_piece(&board, coord_to_square(4, 0))) == PIECE_KING);
-    assert(GET_PIECE_TYPE(board_get_piece(&board, coord_to_square(3, 7))) == PIECE_QUEEN);
+    assert(GET_PIECE_TYPE(board_get_piece(&board, COORD_TO_SQUARE(0, 0))) == PIECE_ROOK);
+    assert(GET_PIECE_TYPE(board_get_piece(&board, COORD_TO_SQUARE(4, 0))) == PIECE_KING);
+    assert(GET_PIECE_TYPE(board_get_piece(&board, COORD_TO_SQUARE(3, 7))) == PIECE_QUEEN);
     
     // Test king tracking
-    assert(board.king_square[0] == coord_to_square(4, 0));  // White king
-    assert(board.king_square[1] == coord_to_square(4, 7));  // Black king
+    assert(board.king_square[0] == COORD_TO_SQUARE(4, 0));  // White king
+    assert(board.king_square[1] == COORD_TO_SQUARE(4, 7));  // Black king
     
     printf("Board setup tests passed!\n");
 }
@@ -73,7 +75,7 @@ void test_fen(void) {
     assert(board_set_fen(&board, advanced_fen));
     assert(board.castling_rights == (CASTLING_WHITE_KINGSIDE | CASTLING_WHITE_QUEENSIDE | 
                                    CASTLING_BLACK_KINGSIDE));
-    assert(board.en_passant_square == coord_to_square(4, 5));  // e6 square
+    assert(board.en_passant_square == COORD_TO_SQUARE(4, 5));  // e6 square
     board_get_fen(&board, fen, sizeof(fen));
     assert(strcmp(fen, advanced_fen) == 0);
     
@@ -95,7 +97,7 @@ void test_fen(void) {
     // Test case 5: Position with en passant opportunity
     const char *ep_fen = "rnbqkbnr/ppp2ppp/4p3/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3";
     assert(board_set_fen(&board, ep_fen));
-    assert(board.en_passant_square == coord_to_square(3, 5));  // d6 square
+    assert(board.en_passant_square == COORD_TO_SQUARE(3, 5));  // d6 square
     board_get_fen(&board, fen, sizeof(fen));
     assert(strcmp(fen, ep_fen) == 0);
     
